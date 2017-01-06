@@ -1,0 +1,7 @@
+<resources>
+  <string name="app_name">BottomNavigationFragment</string>
+  <string name="left">LEFT</string>
+  <string name="right">RIGHT</string>
+  <string name="left_fragment">Left fragment</string>
+  <string name="right_fragment">Right fragment</string>
+</resources>
