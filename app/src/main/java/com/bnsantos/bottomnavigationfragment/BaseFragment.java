@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 
 /**
@@ -19,6 +22,10 @@ import android.view.ViewGroup;
  */
 public class BaseFragment extends Fragment implements BottomNavigationView.OnNavigationItemSelectedListener {
   private BottomNavigationView mNavigationView;
+
+  private FrameLayout mContentLayout;
+  private FrameLayout mBottomLayout;
+  private BlankFragment mBottomFragment;
 
   public BaseFragment() { }
 
@@ -51,6 +58,9 @@ public class BaseFragment extends Fragment implements BottomNavigationView.OnNav
 
     mNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation);
     mNavigationView.setOnNavigationItemSelectedListener(this);
+
+    mBottomLayout = (FrameLayout) view.findViewById(R.id.bottomContainer);
+    mContentLayout = (FrameLayout) view.findViewById(R.id.layout);
   }
 
   @Override
@@ -71,5 +81,38 @@ public class BaseFragment extends Fragment implements BottomNavigationView.OnNav
       ft.commit();
     }
     return true;
+  }
+
+  public void toggleBottomFragment(){
+    if(mBottomLayout.getVisibility() == View.VISIBLE){
+      slideToBottom(mBottomLayout);
+    }else {
+      slideFromBottom(mBottomLayout);
+    }
+  }
+
+  private void slideToBottom(View view) {
+    TranslateAnimation animate = new TranslateAnimation(0, 0, 0, mContentLayout.getHeight());
+    animate.setDuration(1000);
+    animate.setFillAfter(true);
+    view.startAnimation(animate);
+    view.setVisibility(View.GONE);
+
+    getChildFragmentManager().beginTransaction()
+        .remove(mBottomFragment)
+        .commit();
+  }
+
+  private void slideFromBottom(View view) {
+    mBottomFragment = BlankFragment.newInstance();
+    getChildFragmentManager().beginTransaction()
+        .add(R.id.bottomContainer, mBottomFragment)
+        .commit();
+
+    TranslateAnimation animate = new TranslateAnimation(0, 0, mContentLayout.getHeight(), 0);
+    animate.setDuration(1000);
+    animate.setFillAfter(true);
+    view.startAnimation(animate);
+    view.setVisibility(View.VISIBLE);
   }
 }

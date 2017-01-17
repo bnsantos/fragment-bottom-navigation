@@ -18,12 +18,4 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:textColor="@android:color/white"/>
-
-  <FrameLayout
-      android:id="@+id/bottomContainer"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_marginTop="50dp"
-      android:visibility="gone"
-      android:background="@android:color/background_dark"/>
 </FrameLayout>

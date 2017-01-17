@@ -8,8 +8,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.TranslateAnimation;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 
@@ -24,9 +22,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
   private String mText;
   private int mColor;
-  private FrameLayout mContentLayout;
-  private FrameLayout mBottomLayout;
-  private BlankFragment mBottomFragment;
 
   public MenuFragment() { }
 
@@ -77,57 +72,18 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     textView.setText(mText);
 
     view.setBackgroundColor(mColor);
-
     view.findViewById(R.id.action).setOnClickListener(this);
-    mBottomLayout = (FrameLayout) view.findViewById(R.id.bottomContainer);
-    mContentLayout = (FrameLayout) view.findViewById(R.id.layout);
   }
-
-
-
-  @Override
-  public void onClick(View v) {
-    toggleBottomFragment();
-  }
-
-  private void toggleBottomFragment(){
-    if(mBottomLayout.getVisibility() == View.VISIBLE){
-      slideToBottom(mBottomLayout);
-    }else {
-      slideFromBottom(mBottomLayout);
-    }
-  }
-
-  private void slideToBottom(View view) {
-    TranslateAnimation animate = new TranslateAnimation(0, 0, 0, mContentLayout.getHeight());
-    animate.setDuration(1000);
-    animate.setFillAfter(true);
-    view.startAnimation(animate);
-    view.setVisibility(View.GONE);
-
-    getChildFragmentManager().beginTransaction()
-        .remove(mBottomFragment)
-        .commit();
-  }
-
-  private void slideFromBottom(View view) {
-    mBottomFragment = BlankFragment.newInstance();
-    getChildFragmentManager().beginTransaction()
-        .add(R.id.bottomContainer, mBottomFragment)
-        .commit();
-
-    TranslateAnimation animate = new TranslateAnimation(0, 0, mContentLayout.getHeight(), 0);
-    animate.setDuration(1000);
-    animate.setFillAfter(true);
-    view.startAnimation(animate);
-    view.setVisibility(View.VISIBLE);
-  }
-
 
   @Override
   public void onSaveInstanceState(Bundle outState) {
     outState.putString(ARG_TEXT, mText);
     outState.putInt(ARG_COLOR, mColor);
     super.onSaveInstanceState(outState);
+  }
+
+  @Override
+  public void onClick(View v) {
+    ((BaseFragment)getParentFragment()).toggleBottomFragment();
   }
 }
