@@ -115,4 +115,12 @@ public class BaseFragment extends Fragment implements BottomNavigationView.OnNav
     view.startAnimation(animate);
     view.setVisibility(View.VISIBLE);
   }
+
+  public boolean onBackPressed() {
+    if(mBottomLayout.getVisibility() == View.VISIBLE){
+      slideToBottom(mBottomLayout);
+      return false;
+    }
+    return true;
+  }
 }
