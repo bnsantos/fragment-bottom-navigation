@@ -5,6 +5,13 @@
              android:layout_height="match_parent"
              tools:context="com.bnsantos.bottomnavigationfragment.MenuFragment">
 
+  <Button
+      android:id="@+id/action"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:text="@string/show"/>
+
   <TextView
     android:id="@+id/text"
     android:layout_width="match_parent"
@@ -12,4 +19,11 @@
     android:gravity="center"
     android:textColor="@android:color/white"/>
 
+  <FrameLayout
+      android:id="@+id/bottomContainer"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="50dp"
+      android:visibility="gone"
+      android:background="@android:color/background_dark"/>
 </FrameLayout>
